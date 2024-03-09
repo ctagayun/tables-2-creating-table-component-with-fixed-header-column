@@ -4,7 +4,9 @@ import { useTheme } from '@table-library/react-table-library/theme';
 
 /*
   Task: We will enable users to have their header sticky to the top
-
+        You can now scroll the rows of the table in a vertical 
+        direction while the header remains sticky at the top of the 
+        table.
 */
 
 
@@ -22,28 +24,76 @@ import {
 
 const list = [
   {
-    id: '1',
-    name: 'VSCode',
+    id: "1",
+    name: "VSCode",
     deadline: new Date(2020, 1, 17),
-    type: 'SETUP',
+    type: "SETUP",
     isComplete: true,
   },
   {
-    id: '2',
-    name: 'JavaScript',
+    id: "2",
+    name: "JavaScript",
     deadline: new Date(2020, 2, 28),
-    type: 'LEARN',
+    type: "LEARN",
     isComplete: true,
   },
   {
-    id: '3',
-    name: 'React',
+    id: "3",
+    name: "React",
     deadline: new Date(2020, 3, 8),
-    type: 'LEARN',
+    type: "LEARN",
     isComplete: false,
-  }
+  },
+  {
+    id: "4",
+    name: "JSX",
+    deadline: new Date(2020, 4, 10),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "5",
+    name: "Hooks",
+    deadline: new Date(2020, 5, 12),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "6",
+    name: "Components",
+    deadline: new Date(2020, 6, 14),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "7",
+    name: "HTML",
+    deadline: new Date(2020, 7, 17),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "8",
+    name: "CSS",
+    deadline: new Date(2020, 8, 28),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "9",
+    name: "Classes",
+    deadline: new Date(2020, 9, 18),
+    type: "LEARN",
+    isComplete: false,
+  },
+  {
+    id: "10",
+    name: "Functions",
+    deadline: new Date(2020, 10, 5),
+    type: "LEARN",
+    isComplete: false,
+  },
 ];
-
 const THEME = {
   BaseRow: `
     font-size: 14px;
@@ -69,8 +119,26 @@ const App = () => {
 
   //Using theme
   const theme = useTheme({
-    Table: `
-      height: 100%;
+    BaseCell: `
+      &:nth-of-type(1) {
+        left: 0px;
+
+        min-width: 250px;
+        width: 250px;
+      }
+
+      &:nth-of-type(2) {
+        left: 250px;
+
+        min-width: 150px;
+        width: 150px;
+      }
+
+      &:nth-of-type(3),
+      &:nth-of-type(4) {
+        min-width: 50%;
+        width: 50%;
+      }
     `,
   });
 
@@ -78,16 +146,17 @@ const App = () => {
       "nodes property". Theme is another prop.
   */ 
   return (
-    <div style={{
+    <div style={{ //a container div is all that is needed to keep the header in place when scrolling
       height: '150px',
-    }}> 
-      <Table data={data} theme={theme}> 
+      }}
+    > 
+      <Table data={data} theme={theme} layout={{custom: true, horizontalScroll:true}}> 
         {(tableList) => (
           <> 
             <Header>
               <HeaderRow>                      
-                <HeaderCell>Task</HeaderCell>
-                <HeaderCell>Deadline</HeaderCell>
+                <HeaderCell pinLeft>Task</HeaderCell>
+                <HeaderCell pinLeft>Deadline</HeaderCell>
                 <HeaderCell>Type</HeaderCell>
                 <HeaderCell>Complete</HeaderCell>
               </HeaderRow>
@@ -95,8 +164,8 @@ const App = () => {
             <Body>
               {tableList.map((item) => (
                 <Row key={item.id} item={item}>
-                    <Cell>{item.name}</Cell>
-                    <Cell>
+                    <Cell pinLeft>{item.name}</Cell>
+                    <Cell pinLeft>
                       {item.deadline.toLocaleDateString('en-US',
                           {
                             year: 'numeric',
