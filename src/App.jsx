@@ -119,26 +119,8 @@ const App = () => {
 
   //Using theme
   const theme = useTheme({
-    BaseCell: `
-      &:nth-of-type(1) {
-        left: 0px;
-
-        min-width: 250px;
-        width: 250px;
-      }
-
-      &:nth-of-type(2) {
-        left: 250px;
-
-        min-width: 150px;
-        width: 150px;
-      }
-
-      &:nth-of-type(3),
-      &:nth-of-type(4) {
-        min-width: 50%;
-        width: 50%;
-      }
+    Table: `
+      height: 100%;
     `,
   });
 
@@ -150,13 +132,13 @@ const App = () => {
       height: '150px',
       }}
     > 
-      <Table data={data} theme={theme} layout={{custom: true, horizontalScroll:true}}> 
+      <Table data={data} theme={theme}> 
         {(tableList) => (
           <> 
             <Header>
               <HeaderRow>                      
-                <HeaderCell pinLeft>Task</HeaderCell>
-                <HeaderCell pinLeft>Deadline</HeaderCell>
+                <HeaderCell>Task</HeaderCell>
+                <HeaderCell>Deadline</HeaderCell>
                 <HeaderCell>Type</HeaderCell>
                 <HeaderCell>Complete</HeaderCell>
               </HeaderRow>
@@ -164,8 +146,8 @@ const App = () => {
             <Body>
               {tableList.map((item) => (
                 <Row key={item.id} item={item}>
-                    <Cell pinLeft>{item.name}</Cell>
-                    <Cell pinLeft>
+                    <Cell>{item.name}</Cell>
+                    <Cell>
                       {item.deadline.toLocaleDateString('en-US',
                           {
                             year: 'numeric',
